@@ -1,0 +1,125 @@
+{
+  "project_info": {
+    "project_number": "391504380946",
+    "firebase_url": "https://madasg2-2e9c4-default-rtdb.firebaseio.com",
+    "project_id": "madasg2-2e9c4",
+    "storage_bucket": "madasg2-2e9c4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391504380946:android:34b94d70491b8f6bf5c4cb",
+        "android_client_info": {
+          "package_name": "com.example.mad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2F-7s6Jv94-h6L60SEmqGpAR18JRHPH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391504380946:android:da796bc00391c004f5c4cb",
+        "android_client_info": {
+          "package_name": "com.example.mad_asg2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2F-7s6Jv94-h6L60SEmqGpAR18JRHPH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391504380946:android:272b01c7cbc365a8f5c4cb",
+        "android_client_info": {
+          "package_name": "com.example.madasm"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2F-7s6Jv94-h6L60SEmqGpAR18JRHPH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391504380946:android:f434105067db7abaf5c4cb",
+        "android_client_info": {
+          "package_name": "my.edu.madgroupassignment"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2F-7s6Jv94-h6L60SEmqGpAR18JRHPH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391504380946:android:5a4d85af53294495f5c4cb",
+        "android_client_info": {
+          "package_name": "my.edu.my.ass1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2F-7s6Jv94-h6L60SEmqGpAR18JRHPH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391504380946:android:a833395903392bbcf5c4cb",
+        "android_client_info": {
+          "package_name": "my.edu.my.mad"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2F-7s6Jv94-h6L60SEmqGpAR18JRHPH8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
