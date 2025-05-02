@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF"
+    android:padding="16dp"
+    android:layout_marginTop="16dp">
+
+    <!-- App Icon -->
+    <ImageView
+        android:id="@+id/app_icon"
+        android:layout_width="123dp"
+        android:layout_height="181dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:contentDescription="@string/app_icon"
+        android:src="@drawable/logo"
+        tools:ignore="ImageContrastCheck" />
+
+    <!-- Facebook -->
+    <LinearLayout
+        android:id="@+id/facebook_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_card"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+
+        <ImageView
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:contentDescription="@string/Facebook"
+            android:src="@drawable/ic_facebook" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="@string/Facebook"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/arrow_facebook"
+            android:src="@drawable/ic_arrow" />
+    </LinearLayout>
+
+    <!-- Instagram -->
+    <LinearLayout
+        android:id="@+id/instagram_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_card"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:contentDescription="@string/Instagram"
+            android:src="@drawable/ic_instagram" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="@string/Instagram"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/arrow_instagram"
+            android:src="@drawable/ic_arrow" />
+    </LinearLayout>
+
+    <!-- Whatsapp -->
+    <LinearLayout
+        android:id="@+id/whatsapp_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/rounded_card"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <ImageView
+            android:layout_width="41dp"
+            android:layout_height="41dp"
+            android:contentDescription="@string/Whatsapp"
+            android:src="@drawable/ic_whatsapp"
+            tools:ignore="ImageContrastCheck" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:text="@string/Whatsapp"
+            android:textSize="22sp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:contentDescription="@string/arrow_whatsapp"
+            android:src="@drawable/ic_arrow" />
+    </LinearLayout>
+</LinearLayout>
