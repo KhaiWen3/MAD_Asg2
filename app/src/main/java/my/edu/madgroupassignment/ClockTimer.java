@@ -133,48 +133,25 @@ public class ClockTimer extends AppCompatActivity {
         clockBtn.setAlpha(0.5f);
 
         //toggle visibility of hidden options
-        listBtn.setOnClickListener(view -> {
-//            int visibility = rewardBtn.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
-//            rewardBtn.setVisibility(visibility);
-//            searchBtn.setVisibility(visibility);
-
-            View popupView = LayoutInflater.from(this).inflate(R.layout.custom_popup, null);
-
-            PopupWindow popupWindow = new PopupWindow(
-                    popupView,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    true
-            );
-
-            // Set background, animation, etc.
-            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            popupWindow.setOutsideTouchable(true);
-
-            // Find your buttons in the custom layout
-            Button rewardButton = popupView.findViewById(R.id.rewardButton);
-            Button searchButton = popupView.findViewById(R.id.searchButton);
-
-            rewardButton.setOnClickListener(rewardView -> {
-                // Handle reward action
-                popupWindow.dismiss();
-            });
-
-            searchButton.setOnClickListener(searchView -> {
-                // Handle search action
-                popupWindow.dismiss();
-            });
-
-            // Show the popup
-            popupWindow.showAsDropDown(view);
-        });
-
-        // Handle reward button click
-//        rewardBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(ClockTimer.this, RewardActivity.class); // Replace with your actual class
-//            startActivity(intent);
-//        });
+//        listBtn.setOnClickListener(view -> {
+//            PopupMenu popup = new PopupMenu(ClockTimer.this, view);
+//            popup.getMenuInflater().inflate(R.menu.bottom_nav_menu, popup.getMenu());
 //
+//            popup.setOnMenuItemClickListener(item -> {
+//                int id = item.getItemId();
+//                if (id == R.id.menu_reward) {
+//                    startActivity(new Intent(ClockTimer.this, Reward.class));
+//                    return true;
+//                } else if (id == R.id.menu_search) {
+//                    startActivity(new Intent(ClockTimer.this, ProfileActivity.class));
+//                    return true;
+//                }
+//                return false;
+//            });
+//
+//            popup.show();
+//        });
+
 //        // Handle search button click
 //        searchBtn.setOnClickListener(v -> {
 //            Intent intent = new Intent(ClockTimer.this, SearchActivity.class); // Replace with your actual class
@@ -243,32 +220,6 @@ public class ClockTimer extends AppCompatActivity {
         checkOrientation();
     }
 
-//    private void startTimer() {
-//        if (timeLeftInMillis <= 0) {
-//            timeLeftInMillis = selectedStartTime;
-//        }
-//
-//        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                timeLeftInMillis = millisUntilFinished;
-//                updateCountDownText(timeLeftInMillis);
-//                blinkColon();
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                timerRunning = false;
-//                updateButtons();
-//                //timeLeftInMillis = 0;
-//                //updateCountDownText(0);
-//            }
-//        }.start();
-//
-//        timerRunning = true;
-//        updateButtons();
-//    }
-
     private void startTimer() {
         if (timerModeToggleGroup.getCheckedButtonId() == R.id.startFromZeroButton) {
             // Count up timer logic
@@ -334,18 +285,6 @@ public class ClockTimer extends AppCompatActivity {
         updateButtons();
     }
 
-//    private void resetTimer() {
-//        if (countDownTimer != null) {
-//            countDownTimer.cancel();
-//        }
-//        timerRunning = false;
-//        timeLeftInMillis = selectedStartTime;
-//        updateCountDownText(timeLeftInMillis);
-//        updateButtons();
-//        colonText.setVisibility(View.VISIBLE); // Make sure colon is visible after reset
-//
-//    }
-
     private void updateCountDownText(long timeInMillis) {
         int hours = (int) (timeInMillis / 1000) / 3600;
         int minutes = (int) ((timeInMillis / 1000) % 3600) / 60;
@@ -368,26 +307,7 @@ public class ClockTimer extends AppCompatActivity {
                 minutesText.setText(String.format(Locale.getDefault(), "%02d", seconds));
             }
         }
-//        if (hours > 0) {
-//            String timeLeftFormatted = String.format(Locale.getDefault(),
-//                    "%02d:%02d:%02d", hours, minutes, seconds);
-//            hoursText.setText(String.format("%02d", hours));
-//            minutesText.setText(String.format("%02d", minutes));
-//        } else {
-//            String timeLeftFormatted = String.format(Locale.getDefault(),
-//                    "%02d:%02d", minutes, seconds);
-//            hoursText.setText(String.format("%02d", minutes));
-//            minutesText.setText(String.format("%02d", seconds));
-//        }
     }
-
-//    private void blinkColon() {
-//        if (colonText.getVisibility() == View.VISIBLE) {
-//            colonText.setVisibility(View.INVISIBLE);
-//        } else {
-//            colonText.setVisibility(View.VISIBLE);
-//        }
-//    }
 
     private void updateDayInfo() {
         // Simple implementation - you can expand this
