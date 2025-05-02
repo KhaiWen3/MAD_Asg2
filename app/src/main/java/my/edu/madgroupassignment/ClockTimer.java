@@ -119,6 +119,7 @@ public class ClockTimer extends AppCompatActivity {
     }
 
 
+    //Bottom Navigation
     private void setupBottomNavigation() {
         ImageButton clockBtn = findViewById(R.id.clockButton);
         ImageButton listBtn = findViewById(R.id.listButton);
@@ -185,10 +186,10 @@ public class ClockTimer extends AppCompatActivity {
 //            startActivity(intent);
 //        });
 //
-//        profileBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(ClockTimer.this, Profile.class); //Replace with actual class
-//            startActivity(intent);
-//        });
+        profileBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ClockTimer.this, ProfileActivity.class); //Replace with actual class
+            startActivity(intent);
+        });
     }
 
     private void startClockUpdates() {

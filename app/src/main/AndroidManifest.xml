@@ -30,6 +30,8 @@
             android:theme="@style/AppTheme.LightBlueActionBar" />
         <activity android:name=".ContactActivity"
             android:theme="@style/AppTheme.LightBlueActionBar" />
+        <activity android:name=".ProfileActivity"
+            android:exported="true" />
         <receiver android:name=".NotificationReceiver" />
 <!--        <activity-->
 <!--            android:name=".RewardActivity"-->

@@ -6,4 +6,6 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="colorLightBlue">#427ad1</color>
+    <color name="lightblue">#b6dff7</color>
+    <color name="darkblue">#529ad9</color>
 </resources>
