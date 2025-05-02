@@ -37,5 +37,8 @@
     <string name="birthday">Birthday</string>
     <string name="save">Save</string>
     <string name="taskmate_run">TaskMate</string>
+    <string name="username_edit">Username</string>
+    <string name="phone_number">Phone Number</string>
+
 
 </resources>
