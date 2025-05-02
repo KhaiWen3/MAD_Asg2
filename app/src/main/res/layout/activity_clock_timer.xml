@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ClockTimer"
+    android:background="#f4f8fa">
+
+    <!-- Your main content -->
+    <LinearLayout
+        android:id="@+id/clock_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:weightSum="2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/button_container"
+        android:rotation="90">
+        <!-- Your main UI goes here -->
+
+        <!-- Left Container - Hours & Date -->
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="@drawable/hour_container_bg">
+
+            <!-- Hours Display -->
+            <TextView
+                android:id="@+id/hoursText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:text="11"
+                android:textColor="#000000"
+                android:textSize="72sp" />
+
+            <!-- Date Display -->
+            <TextView
+                android:id="@+id/dateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="June 15, 2023"
+                android:textColor="#123f39"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/colonText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:text=""
+            android:textColor="#666666"
+            android:textSize="72sp" />
+
+        <!-- Right Container - Minutes & Day -->
+        <LinearLayout
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="16dp"
+            android:background="@drawable/minute_container_bg">
+
+            <!-- Minutes Display -->
+            <TextView
+                android:id="@+id/minutesText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-black"
+                android:text="45"
+                android:textColor="#000000"
+                android:textSize="72sp" />
+
+            <!-- Day Display -->
+            <TextView
+                android:id="@+id/dayInfoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Friday"
+                android:textColor="#123f39"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Button Container -->
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintTop_toBottomOf="@id/clock_container"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
+        android:rotation="90">
+
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Start"
+            android:textAllCaps="false"
+            android:backgroundTint="#4CAF50"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="16dp"
+            android:elevation="4dp"/>
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:text="Reset"
+            android:textAllCaps="false"
+            android:backgroundTint="#F44336"
+            android:textColor="#FFFFFF"
+            android:layout_marginEnd="16dp"
+            android:elevation="4dp"/>
+    </LinearLayout>
+
+
+
+    <!--Bottom Navigation Bar-->
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageButton
+            android:id="@+id/listButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/menu"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <!--Hidden sub-options-->
+        <Button
+            android:id="@+id/rewardButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reward"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Search"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+
+        <ImageButton
+            android:id="@+id/homeButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/home"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <ImageButton
+            android:id="@+id/clockButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/clock"
+            android:background="#529ad9"/>
+
+        <ImageButton
+            android:id="@+id/profileButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/user"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+    </LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
