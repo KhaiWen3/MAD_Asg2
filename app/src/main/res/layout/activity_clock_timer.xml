@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:paddingTop="200dp"
+        android:paddingTop="240dp"
         android:paddingBottom="16dp"
         android:rotation="90">
 
@@ -66,7 +66,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
-            android:layout_marginBottom="24dp"
             android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="2">
@@ -162,32 +161,30 @@
             android:id="@+id/button_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:gravity="center"
             android:orientation="horizontal">
 
             <Button
                 android:id="@+id/startButton"
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="#4CAF50"
                 android:elevation="4dp"
                 android:text="Start"
                 android:textAllCaps="false"
-                android:textSize="16sp"
                 android:textColor="#FFFFFF" />
 
             <Button
                 android:id="@+id/resetButton"
-                android:layout_width="120dp"
-                android:layout_height="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="48dp"
                 android:layout_marginEnd="16dp"
                 android:backgroundTint="#F44336"
                 android:elevation="4dp"
                 android:text="Reset"
                 android:textAllCaps="false"
-                android:textSize="16sp"
                 android:textColor="#FFFFFF" />
         </LinearLayout>
     </LinearLayout>
@@ -201,19 +198,19 @@
         android:background="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!--Hidden sub-options-->
-        <Button
-            android:id="@+id/searchButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
+        <ImageButton
+            android:id="@+id/listButton"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
             android:padding="4dp"
             android:scaleType="fitCenter"
-            android:visibility="gone" />
+            android:src="@drawable/menu"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
 
         <ImageButton
             android:id="@+id/homeButton"
-            android:layout_width="0dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:padding="4dp"
@@ -223,7 +220,7 @@
 
         <ImageButton
             android:id="@+id/clockButton"
-            android:layout_width="0dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:padding="4dp"
@@ -233,7 +230,7 @@
 
         <ImageButton
             android:id="@+id/profileButton"
-            android:layout_width="0dp"
+            android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:padding="4dp"

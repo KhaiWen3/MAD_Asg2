@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.Switch;
@@ -37,6 +38,27 @@ public class ProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile); // Make sure this matches your XML file name
+
+        ImageView profileImage = findViewById(R.id.profile_image);
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+        ref.child("imageUrl").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String url = snapshot.getValue(String.class);
+                if (url != null) {
+                    Glide.with(ProfileActivity.this).load(url).into(profileImage);
+                }
+            }
+
+            @Override public void onCancelled(@NonNull DatabaseError error) { }
+        });
+
+
+        profileImage.setOnClickListener(view -> {
+            startActivity(new Intent(ProfileActivity.this, EditProfileActivity.class));
+        });
+
 
         // Initialize views
         switchNotification = findViewById(R.id.switch_notification);
@@ -141,6 +163,20 @@ public class ProfileActivity extends AppCompatActivity {
         if (alarmManager != null) {
             alarmManager.cancel(pendingIntent);
         }
+    }
+
+    // Sign out method
+    private void signOut() {
+        // Show progress bar or indicator to show user is being logged out
+        Toast.makeText(ProfileActivity.this, "Logging out...", Toast.LENGTH_SHORT).show();
+
+        // Perform Firebase logout asynchronously
+        FirebaseAuth.getInstance().signOut();
+
+        // Redirect to login activity
+        Intent intent = new Intent(ProfileActivity.this, Login.class);
+        startActivity(intent);
+        finish();
     }
 
     //Bottom Navigation
