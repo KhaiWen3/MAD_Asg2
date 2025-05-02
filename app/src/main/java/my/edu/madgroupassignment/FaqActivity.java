@@ -41,7 +41,7 @@ public class FaqActivity extends AppCompatActivity {
         answer2.add("Rewards are visible under the 'My Rewards' tab in the main menu.");
 
         List<String> answer3 = new ArrayList<>();
-        answer3.add("Tap the 'Support' button in the Help section to chat or email our team.");
+        answer3.add("Tap the 'Contact Us' button in the Profile page to chat with our team.");
 
         listItem.put(listGroup.get(0), answer1);
         listItem.put(listGroup.get(1), answer2);
@@ -57,8 +57,8 @@ public class FaqActivity extends AppCompatActivity {
         List<String> answer5 = new ArrayList<>();
         answer5.add("Currently, task sharing is not supported. Stay tuned for future updates!");
 
-        listItem.put("How to create a new task?", answer4);
-        listItem.put("Can I share tasks with others?", answer5);
+        listItem.put(listGroup.get(3), answer4);
+        listItem.put(listGroup.get(4), answer5);
 
         adapter = new FaqExpandableListAdapter(this, listGroup, listItem);
         faqExpandableListView.setAdapter(adapter);

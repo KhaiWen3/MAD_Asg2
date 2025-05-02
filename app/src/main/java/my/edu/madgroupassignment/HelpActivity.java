@@ -49,7 +49,7 @@ public class HelpActivity extends AppCompatActivity{
         taskDesc.add("Use task templates for quick task creation.");
 
         List<String> clockDesc = new ArrayList<>();
-        clockDesc.add("Use the Focus Clock to help concentrate while working on tasks.");
+        clockDesc.add("Use the Clock Timer to help concentrate while working on tasks.");
         clockDesc.add("Track time spent on each task effectively.");
 
         List<String> rewardsDesc = new ArrayList<>();

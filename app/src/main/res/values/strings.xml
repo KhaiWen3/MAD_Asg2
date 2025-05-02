@@ -32,4 +32,10 @@
     <string name="arrow_instagram">arrow_instagram</string>
     <string name="arrow_whatsapp">arrow_whatsapp</string>
     <string name="app_icon">app_icon</string>
+    <string name="edit_profile_picture">Edit Profile Picture</string>
+    <string name="age">Age</string>
+    <string name="birthday">Birthday</string>
+    <string name="save">Save</string>
+    <string name="taskmate_run">TaskMate</string>
+
 </resources>

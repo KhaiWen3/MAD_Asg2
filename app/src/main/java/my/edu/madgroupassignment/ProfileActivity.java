@@ -1,7 +1,15 @@
 package my.edu.madgroupassignment;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,6 +39,8 @@ public class ProfileActivity extends AppCompatActivity {
         helpItem = findViewById(R.id.help_item);
         faqItem = findViewById(R.id.faq_item);
         contactItem = findViewById(R.id.contact_item);
+
+        setupBottomNavigation();
 
         // Handle Notification Switch
         switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -111,6 +121,80 @@ public class ProfileActivity extends AppCompatActivity {
         if (alarmManager != null) {
             alarmManager.cancel(pendingIntent);
         }
+    }
+
+    //Bottom Navigation
+    private void setupBottomNavigation() {
+        ImageButton clockBtn = findViewById(R.id.clockButton);
+        ImageButton listBtn = findViewById(R.id.listButton);
+        ImageButton homeBtn = findViewById(R.id.homeButton);
+        ImageButton profileBtn = findViewById(R.id.profileButton);
+        Button rewardBtn = findViewById(R.id.rewardButton);
+        Button searchBtn = findViewById(R.id.searchButton);
+
+        // Disable current page button
+        profileBtn.setEnabled(false);
+        profileBtn.setAlpha(0.5f);
+
+        //toggle visibility of hidden options
+        listBtn.setOnClickListener(view -> {
+//            int visibility = rewardBtn.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
+//            rewardBtn.setVisibility(visibility);
+//            searchBtn.setVisibility(visibility);
+
+            View popupView = LayoutInflater.from(this).inflate(R.layout.custom_popup, null);
+
+            PopupWindow popupWindow = new PopupWindow(
+                    popupView,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    true
+            );
+
+            // Set background, animation, etc.
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            popupWindow.setOutsideTouchable(true);
+
+            // Find your buttons in the custom layout
+            Button rewardButton = popupView.findViewById(R.id.rewardButton);
+            Button searchButton = popupView.findViewById(R.id.searchButton);
+
+            rewardButton.setOnClickListener(rewardView -> {
+                // Handle reward action
+                popupWindow.dismiss();
+            });
+
+            searchButton.setOnClickListener(searchView -> {
+                // Handle search action
+                popupWindow.dismiss();
+            });
+
+            // Show the popup
+            popupWindow.showAsDropDown(view);
+        });
+
+        // Handle reward button click
+//        rewardBtn.setOnClickListener(v -> {
+//            Intent intent = new Intent(ClockTimer.this, RewardActivity.class); // Replace with your actual class
+//            startActivity(intent);
+//        });
+//
+//        // Handle search button click
+//        searchBtn.setOnClickListener(v -> {
+//            Intent intent = new Intent(ClockTimer.this, SearchActivity.class); // Replace with your actual class
+//            startActivity(intent);
+//        });
+//
+//        homeBtn.setOnClickListener(v -> {
+//            Intent intent = new Intent(ClockTimer.this, HomeActivity.class); // Change to your actual home activity
+//            startActivity(intent);
+//        });
+
+        clockBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, ClockTimer.class); // Replace 'CurrentActivity' with your current context
+            startActivity(intent);
+        });
+
     }
 
 }
