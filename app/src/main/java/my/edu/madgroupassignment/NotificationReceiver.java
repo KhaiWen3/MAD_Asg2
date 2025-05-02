@@ -15,6 +15,19 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            CharSequence name = "Task Notifications";
+            String description = "Channel for task reminder notifications";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+
+            // 注册通知渠道
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
         createNotificationChannel(context);
 
         Intent notificationIntent = new Intent(context, ProfileActivity.class);

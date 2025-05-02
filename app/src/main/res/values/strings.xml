@@ -40,5 +40,12 @@
     <string name="username_edit">Username</string>
     <string name="phone_number">Phone Number</string>
 
+    <string-array name="notification_times">
+        <item>15 Minutes </item>
+        <item>30 Minutes </item>
+        <item>1 Hour</item>
+        <item>2 Hours</item>
+    </string-array>
+
 
 </resources>
