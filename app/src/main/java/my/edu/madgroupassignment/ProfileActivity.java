@@ -17,7 +17,14 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import java.util.Calendar;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AppCompatActivity;
 public class ProfileActivity extends AppCompatActivity {
@@ -53,6 +60,15 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            // No logged-in user, redirect to login
+            Intent intent = new Intent(this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
 
 
         // Click listeners
@@ -66,10 +82,14 @@ public class ProfileActivity extends AppCompatActivity {
             contactItem.setOnClickListener(view -> openContact());
 
         signOutBtn.setOnClickListener(view -> {
+            FirebaseAuth.getInstance().signOut(); // Sign out from Firebase
             Toast.makeText(ProfileActivity.this, "Signed Out", Toast.LENGTH_SHORT).show();
-            // Perform sign out logic here
-            // For example: clear SharedPreferences, go back to login screen
-            finish(); // Or redirect to LoginActivity
+
+            // Redirect to Login activity and clear back stack
+            Intent intent = new Intent(ProfileActivity.this, Login.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish(); // Finish current activity
         });
     }
 
