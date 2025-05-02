@@ -4,16 +4,24 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.PopupWindow;
 import android.widget.TextView;
+
+import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import org.w3c.dom.Text;
 
@@ -23,12 +31,15 @@ import java.util.Locale;
 
 public class ClockTimer extends AppCompatActivity {
 
-    private TextView hoursText, minutesText, colonText, dayInfoText, dateText; //Views
+    private TextView hoursText, minutesText, secondsText, dayInfoText, dateText; //Views
     private Button startButton, resetButton;
+    private MaterialButtonToggleGroup timerModeToggleGroup;
     private CountDownTimer countDownTimer;
     private boolean timerRunning;
     private long timeLeftInMillis = 0;
-    private static final long DEFAULT_TIME = 25 * 60 * 1000; // 25 minutes in milliseconds
+    private static final long POMODORO_TIME = 25 * 60 * 1000; // 25 minutes in milliseconds
+    private static final long START_FROM_ZERO_TIME = 0;
+    private long selectedStartTime = POMODORO_TIME;
 
     // Handler for clock updates
     private Handler clockHandler = new Handler();
@@ -42,17 +53,20 @@ public class ClockTimer extends AppCompatActivity {
         // Initialize views
         hoursText = findViewById(R.id.hoursText);
         minutesText = findViewById(R.id.minutesText);
-        colonText = findViewById(R.id.colonText);
+        secondsText = findViewById(R.id.secondsText);
+        secondsText.setVisibility(View.GONE); // Hide by default
         dayInfoText = findViewById(R.id.dayInfoText);
+
         startButton = findViewById(R.id.startButton);
         resetButton = findViewById(R.id.resetButton);
         dateText = findViewById(R.id.dateText);
+        timerModeToggleGroup = findViewById(R.id.timerModeToggleGroup);
 
         // Initialize bottom navigation
         setupBottomNavigation();
 
         // Set initial time
-        updateCountDownText(DEFAULT_TIME);
+        updateCountDownText(POMODORO_TIME);
         updateDayInfo();
 
         // Start live clock updates
@@ -60,6 +74,37 @@ public class ClockTimer extends AppCompatActivity {
 
         // Handle rotation
         checkOrientation();
+
+        // Toggle between Pomodoro and Start from 0
+        timerModeToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                if (checkedId == R.id.clockBtn) {
+                    // Handle Clock mode
+                    try{
+                        timerRunning=false;
+                        startClockUpdates();
+                        //updateDayAndDate();
+                        Log.d("Back to clock button", "rinsideeeee");
+                    }catch (Exception ex){
+                        Log.d("Back to clock button", ex.getMessage());
+                    }
+                }
+                else if (checkedId == R.id.pomodoroButton) {
+                    try{
+                        Log.d("test", "inside promot");
+                        selectedStartTime = POMODORO_TIME;
+                        resetTimer();
+                    }
+                    catch(Exception ex){
+                        Log.d("Error",ex.getMessage());
+                    }
+                }
+                else if (checkedId == R.id.startFromZeroButton) {
+                    selectedStartTime = 60 * 1000;
+                    resetTimer();
+                }
+            }
+        });
 
         // Button click listeners
         startButton.setOnClickListener(v -> {
@@ -87,10 +132,40 @@ public class ClockTimer extends AppCompatActivity {
         clockBtn.setAlpha(0.5f);
 
         //toggle visibility of hidden options
-        listBtn.setOnClickListener(v -> {
-            int visibility = rewardBtn.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
-            rewardBtn.setVisibility(visibility);
-            searchBtn.setVisibility(visibility);
+        listBtn.setOnClickListener(view -> {
+//            int visibility = rewardBtn.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
+//            rewardBtn.setVisibility(visibility);
+//            searchBtn.setVisibility(visibility);
+
+            View popupView = LayoutInflater.from(this).inflate(R.layout.custom_popup, null);
+
+            PopupWindow popupWindow = new PopupWindow(
+                    popupView,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    true
+            );
+
+            // Set background, animation, etc.
+            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            popupWindow.setOutsideTouchable(true);
+
+            // Find your buttons in the custom layout
+            Button rewardButton = popupView.findViewById(R.id.rewardButton);
+            Button searchButton = popupView.findViewById(R.id.searchButton);
+
+            rewardButton.setOnClickListener(rewardView -> {
+                // Handle reward action
+                popupWindow.dismiss();
+            });
+
+            searchButton.setOnClickListener(searchView -> {
+                // Handle search action
+                popupWindow.dismiss();
+            });
+
+            // Show the popup
+            popupWindow.showAsDropDown(view);
         });
 
         // Handle reward button click
@@ -137,6 +212,10 @@ public class ClockTimer extends AppCompatActivity {
                 calendar.get(Calendar.HOUR_OF_DAY)));
         minutesText.setText(String.format(Locale.getDefault(), "%02d",
                 calendar.get(Calendar.MINUTE)));
+        secondsText.setText(String.format(Locale.getDefault(), "%02d",
+                calendar.get(Calendar.SECOND)));
+        secondsText.setVisibility(View.VISIBLE);
+        //secondsText.setVisibility(View.GONE);
 
         // Update date and day
         dayInfoText.setText(calendar.getDisplayName(
@@ -163,27 +242,67 @@ public class ClockTimer extends AppCompatActivity {
         checkOrientation();
     }
 
+//    private void startTimer() {
+//        if (timeLeftInMillis <= 0) {
+//            timeLeftInMillis = selectedStartTime;
+//        }
+//
+//        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                timeLeftInMillis = millisUntilFinished;
+//                updateCountDownText(timeLeftInMillis);
+//                blinkColon();
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//                timerRunning = false;
+//                updateButtons();
+//                //timeLeftInMillis = 0;
+//                //updateCountDownText(0);
+//            }
+//        }.start();
+//
+//        timerRunning = true;
+//        updateButtons();
+//    }
+
     private void startTimer() {
-        if (timeLeftInMillis == 0) {
-            timeLeftInMillis = DEFAULT_TIME;
+        if (timerModeToggleGroup.getCheckedButtonId() == R.id.startFromZeroButton) {
+            // Count up timer logic
+            timeLeftInMillis = 0;
+            countDownTimer = new CountDownTimer(Long.MAX_VALUE, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    timeLeftInMillis += 1000;
+                    updateCountDownText(timeLeftInMillis);
+                }
+
+                @Override
+                public void onFinish() {
+                    // Never called for count-up timer
+                }
+            }.start();
+        } else {
+            // Normal countdown logic
+            if (timeLeftInMillis <= 0) {
+                timeLeftInMillis = selectedStartTime;
+            }
+            countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    timeLeftInMillis = millisUntilFinished;
+                    updateCountDownText(timeLeftInMillis);
+                }
+
+                @Override
+                public void onFinish() {
+                    timerRunning = false;
+                    updateButtons();
+                }
+            }.start();
         }
-
-        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                timeLeftInMillis = millisUntilFinished;
-                updateCountDownText(timeLeftInMillis);
-                blinkColon();
-            }
-
-            @Override
-            public void onFinish() {
-                timerRunning = false;
-                updateButtons();
-                timeLeftInMillis = 0;
-                updateCountDownText(0);
-            }
-        }.start();
 
         timerRunning = true;
         updateButtons();
@@ -200,37 +319,74 @@ public class ClockTimer extends AppCompatActivity {
             countDownTimer.cancel();
         }
         timerRunning = false;
-        timeLeftInMillis = DEFAULT_TIME;
+
+        if (timerModeToggleGroup.getCheckedButtonId() == R.id.startFromZeroButton) {
+            timeLeftInMillis = 0;
+            secondsText.setText("00");
+            secondsText.setVisibility(View.VISIBLE);
+        } else {
+            timeLeftInMillis = selectedStartTime;
+            secondsText.setVisibility(View.GONE);
+        }
+
         updateCountDownText(timeLeftInMillis);
         updateButtons();
-        colonText.setVisibility(View.VISIBLE); // Make sure colon is visible after reset
     }
+
+//    private void resetTimer() {
+//        if (countDownTimer != null) {
+//            countDownTimer.cancel();
+//        }
+//        timerRunning = false;
+//        timeLeftInMillis = selectedStartTime;
+//        updateCountDownText(timeLeftInMillis);
+//        updateButtons();
+//        colonText.setVisibility(View.VISIBLE); // Make sure colon is visible after reset
+//
+//    }
 
     private void updateCountDownText(long timeInMillis) {
         int hours = (int) (timeInMillis / 1000) / 3600;
         int minutes = (int) ((timeInMillis / 1000) % 3600) / 60;
         int seconds = (int) (timeInMillis / 1000) % 60;
 
-        if (hours > 0) {
-            String timeLeftFormatted = String.format(Locale.getDefault(),
-                    "%02d:%02d:%02d", hours, minutes, seconds);
-            hoursText.setText(String.format("%02d", hours));
-            minutesText.setText(String.format("%02d", minutes));
+        // Always show hours if counting up, or if hours > 0 when counting down
+        if (timerModeToggleGroup.getCheckedButtonId() == R.id.startFromZeroButton || hours > 0) {
+            hoursText.setText(String.format(Locale.getDefault(), "%02d", hours));
+            minutesText.setText(String.format(Locale.getDefault(), "%02d", minutes));
+            secondsText.setText(String.format(Locale.getDefault(), "%02d", seconds));
+            secondsText.setVisibility(View.VISIBLE);
         } else {
-            String timeLeftFormatted = String.format(Locale.getDefault(),
-                    "%02d:%02d", minutes, seconds);
-            hoursText.setText(String.format("%02d", minutes));
-            minutesText.setText(String.format("%02d", seconds));
+            // Pomodoro mode - normal display
+            secondsText.setVisibility(View.GONE);
+            if (hours > 0) {
+                hoursText.setText(String.format(Locale.getDefault(), "%02d", hours));
+                minutesText.setText(String.format(Locale.getDefault(), "%02d", minutes));
+            } else {
+                hoursText.setText(String.format(Locale.getDefault(), "%02d", minutes));
+                minutesText.setText(String.format(Locale.getDefault(), "%02d", seconds));
+            }
         }
+//        if (hours > 0) {
+//            String timeLeftFormatted = String.format(Locale.getDefault(),
+//                    "%02d:%02d:%02d", hours, minutes, seconds);
+//            hoursText.setText(String.format("%02d", hours));
+//            minutesText.setText(String.format("%02d", minutes));
+//        } else {
+//            String timeLeftFormatted = String.format(Locale.getDefault(),
+//                    "%02d:%02d", minutes, seconds);
+//            hoursText.setText(String.format("%02d", minutes));
+//            minutesText.setText(String.format("%02d", seconds));
+//        }
     }
 
-    private void blinkColon() {
-        if (colonText.getVisibility() == View.VISIBLE) {
-            colonText.setVisibility(View.INVISIBLE);
-        } else {
-            colonText.setVisibility(View.VISIBLE);
-        }
-    }
+//    private void blinkColon() {
+//        if (colonText.getVisibility() == View.VISIBLE) {
+//            colonText.setVisibility(View.INVISIBLE);
+//        } else {
+//            colonText.setVisibility(View.VISIBLE);
+//        }
+//    }
 
     private void updateDayInfo() {
         // Simple implementation - you can expand this
