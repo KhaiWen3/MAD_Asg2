@@ -122,50 +122,26 @@ public class ClockTimer extends AppCompatActivity {
     //Bottom Navigation
     private void setupBottomNavigation() {
         ImageButton clockBtn = findViewById(R.id.clockButton);
-        ImageButton listBtn = findViewById(R.id.listButton);
         ImageButton homeBtn = findViewById(R.id.homeButton);
         ImageButton profileBtn = findViewById(R.id.profileButton);
-        Button rewardBtn = findViewById(R.id.rewardButton);
         Button searchBtn = findViewById(R.id.searchButton);
 
         // Disable current page button
         clockBtn.setEnabled(false);
         clockBtn.setAlpha(0.5f);
 
-        //toggle visibility of hidden options
-//        listBtn.setOnClickListener(view -> {
-//            PopupMenu popup = new PopupMenu(ClockTimer.this, view);
-//            popup.getMenuInflater().inflate(R.menu.bottom_nav_menu, popup.getMenu());
-//
-//            popup.setOnMenuItemClickListener(item -> {
-//                int id = item.getItemId();
-//                if (id == R.id.menu_reward) {
-//                    startActivity(new Intent(ClockTimer.this, Reward.class));
-//                    return true;
-//                } else if (id == R.id.menu_search) {
-//                    startActivity(new Intent(ClockTimer.this, ProfileActivity.class));
-//                    return true;
-//                }
-//                return false;
-//            });
-//
-//            popup.show();
-//        });
-
-//        // Handle search button click
-//        searchBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(ClockTimer.this, SearchActivity.class); // Replace with your actual class
-//            startActivity(intent);
-//        });
-//
-//        homeBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(ClockTimer.this, HomeActivity.class); // Change to your actual home activity
-//            startActivity(intent);
-//        });
-//
-        profileBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(ClockTimer.this, ProfileActivity.class); //Replace with actual class
+        // Handle home button click
+        homeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ClockTimer.this, DisplayTask.class);
             startActivity(intent);
+            finish();
+        });
+
+        // Handle profile button click
+        profileBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ClockTimer.this, ProfileActivity.class);
+            startActivity(intent);
+            finish();
         });
     }
 
