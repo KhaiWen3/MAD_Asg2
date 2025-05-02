@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/username_edit"
         android:inputType="textPersonName"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:autofillHints="username" />
 
     <EditText
         android:id="@+id/edit_phone"
@@ -25,7 +26,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/phone_number"
         android:inputType="phone"
-        android:minHeight="48dp" />
+        android:minHeight="48dp"
+        android:autofillHints="number" />
 
     <EditText
         android:id="@+id/edit_age"
