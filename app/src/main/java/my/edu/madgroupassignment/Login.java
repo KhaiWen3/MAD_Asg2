@@ -60,7 +60,7 @@ public class Login extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
                         // 这里跳转到主页或主界面
-                        startActivity(new Intent(this, MainActivity.class));
+                        startActivity(new Intent(this, ClockTimer.class));
                         finish();
                     } else {
                         Toast.makeText(this, "Login Failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();

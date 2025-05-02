@@ -25,7 +25,10 @@
         <activity android:name=".MainActivity"
             android:exported="false">
         </activity>
-
+        <activity android:name=".Register"
+            android:exported="true" />
+        <activity android:name=".Login"
+            android:exported="true" />
         <activity android:name=".ClockTimer"
             android:exported="true" />
         <activity android:name=".HelpActivity"
