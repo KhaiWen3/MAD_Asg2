@@ -1,12 +1,20 @@
 package my.edu.madgroupassignment;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.widget.*;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +26,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
+
+    private static final int REQUEST_CODE_PICK_IMAGE = 1001;
+    private static final int REQUEST_CODE_STORAGE_PERMISSION = 100;
 
     private ImageView imageView;
     private EditText editUsername, editPhone, editAge, editBirthday;
@@ -63,16 +74,21 @@ public class EditProfileActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
                 Toast.makeText(EditProfileActivity.this, "Failed to load profile.", Toast.LENGTH_SHORT).show();
             }
+
+
         });
 
-        // Pick image from gallery
+
+        // Handle image selection with permission
         imageView.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setType("image/*");
-            startActivityForResult(intent, 1001);
+            if (checkStoragePermission()) {
+                openImagePicker();
+            } else {
+                requestStoragePermission();
+            }
         });
 
-        // Date picker for birthday
+        // Date picker
         editBirthday.setOnClickListener(v -> {
             Calendar c = Calendar.getInstance();
             DatePickerDialog datePickerDialog = new DatePickerDialog(this,
@@ -81,89 +97,153 @@ public class EditProfileActivity extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        // Save profile button logic
+        // Save profile
         btnSave.setOnClickListener(v -> {
-            String username = editUsername.getText().toString().trim();
-            String phone = editPhone.getText().toString().trim();
-            String age = editAge.getText().toString().trim();
-            String birthday = editBirthday.getText().toString().trim();
-
-            // Validation
-            if (username.isEmpty()) {
-                editUsername.setError("Username is required");
-                editUsername.requestFocus();
-                return;
-            }
-
-            if (phone.isEmpty()) {
-                editPhone.setError("Phone number is required");
-                editPhone.requestFocus();
-                return;
-            }
-
-            // Regex for format like 011-13069816
-            if (!phone.matches("^\\d{3}-\\d{8}$")) {
-                editPhone.setError("Phone format must be like 012-52389245");
-                editPhone.requestFocus();
-                return;
-            }
-
-
-            if (age.isEmpty()) {
-                editAge.setError("Age is required");
-                editAge.requestFocus();
-                return;
-            }
-
-            try {
-                int ageInt = Integer.parseInt(age);
-                if (ageInt <= 0 || ageInt > 120) {
-                    editAge.setError("Enter a valid age");
-                    editAge.requestFocus();
-                    return;
-                }
-            } catch (NumberFormatException e) {
-                editAge.setError("Age must be a number");
-                editAge.requestFocus();
-                return;
-            }
-
-            if (birthday.isEmpty()) {
-                editBirthday.setError("Birthday is required");
-                editBirthday.requestFocus();
-                return;
-            }
-
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("username", username);
-            updates.put("phone", phone);
-            updates.put("age", age);
-            updates.put("birthday", birthday);
-
-            if (selectedImageUri != null) {
-                storageRef.putFile(selectedImageUri).addOnSuccessListener(taskSnapshot ->
-                        storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
-                            updates.put("imageUrl", uri.toString());
-                            userRef.updateChildren(updates);
-                            setResult(RESULT_OK);
-                            finish();
+            String newUsername = editUsername.getText().toString().trim();
+            if (!newUsername.isEmpty()) {
+                // Assuming userRef already points to the current user's node
+                userRef.child("username").setValue(newUsername)
+                        .addOnSuccessListener(aVoid -> {
+                            Toast.makeText(EditProfileActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
+                            finish(); // Optional: go back to ProfileActivity
                         })
-                );
-            } else {
-                userRef.updateChildren(updates);
-                setResult(RESULT_OK);
-                finish();
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(EditProfileActivity.this, "Failed to update", Toast.LENGTH_SHORT).show();
+                        });
             }
         });
+
     }
 
-    // Handle selected image
+    private boolean checkStoragePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED;
+        }
+        return true;  // Permissions automatically granted for versions lower than Marshmallow
+    }
+
+
+    private void requestStoragePermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Permission Needed")
+                    .setMessage("Permission is needed to access your gallery.")
+                    .setPositiveButton("OK", (dialog, which) ->
+                            ActivityCompat.requestPermissions(this,
+                                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                                    REQUEST_CODE_STORAGE_PERMISSION))
+                    .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
+                    .create().show();
+        } else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    REQUEST_CODE_STORAGE_PERMISSION);
+        }
+    }
+
+
+
+    private void openImagePicker() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
+    }
+
+    private void saveProfile() {
+        String username = editUsername.getText().toString().trim();
+        String phone = editPhone.getText().toString().trim();
+        String age = editAge.getText().toString().trim();
+        String birthday = editBirthday.getText().toString().trim();
+
+        if (username.isEmpty()) {
+            editUsername.setError("Username is required");
+            editUsername.requestFocus();
+            return;
+        }
+
+        if (phone.isEmpty()) {
+            editPhone.setError("Phone number is required");
+            editPhone.requestFocus();
+            return;
+        }
+
+        if (!phone.matches("^\\d{3}-\\d{8}$")) {
+            editPhone.setError("Phone format must be like 012-52389245");
+            editPhone.requestFocus();
+            return;
+        }
+
+        if (age.isEmpty()) {
+            editAge.setError("Age is required");
+            editAge.requestFocus();
+            return;
+        }
+
+        try {
+            int ageInt = Integer.parseInt(age);
+            if (ageInt <= 0 || ageInt > 120) {
+                editAge.setError("Enter a valid age");
+                editAge.requestFocus();
+                return;
+            }
+        } catch (NumberFormatException e) {
+            editAge.setError("Age must be a number");
+            editAge.requestFocus();
+            return;
+        }
+
+        if (birthday.isEmpty()) {
+            editBirthday.setError("Birthday is required");
+            editBirthday.requestFocus();
+            return;
+        }
+
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("username", username);
+        updates.put("phone", phone);
+        updates.put("age", age);
+        updates.put("birthday", birthday);
+
+        if (selectedImageUri != null) {
+            storageRef.putFile(selectedImageUri).addOnSuccessListener(taskSnapshot ->
+                    storageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        updates.put("imageUrl", uri.toString());
+                        userRef.updateChildren(updates);
+                        Intent resultIntent = new Intent();
+                        resultIntent.putExtra("updatedUsername", username); // Pass updated username
+                        setResult(RESULT_OK, resultIntent);
+                        finish();
+                    })
+            );
+        } else {
+            userRef.updateChildren(updates);
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("updatedUsername", username); // Pass updated username
+            setResult(RESULT_OK, resultIntent);
+            finish();
+        }
+    }
+
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1001 && resultCode == RESULT_OK && data != null) {
+        if (requestCode == REQUEST_CODE_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
             selectedImageUri = data.getData();
             imageView.setImageURI(selectedImageUri);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openImagePicker();
+            } else {
+                Toast.makeText(this, "Permission denied to access storage.", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

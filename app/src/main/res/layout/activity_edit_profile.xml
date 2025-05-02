@@ -55,4 +55,3 @@
         android:text="@string/save"
         android:textColor="#795548" />
 </LinearLayout>
-

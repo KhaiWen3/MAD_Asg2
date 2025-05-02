@@ -25,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.bumptech.glide.Glide;
+import com.google.firebase.database.annotations.Nullable;
+
 import androidx.annotation.NonNull;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -147,10 +149,7 @@ public class ProfileActivity extends AppCompatActivity {
                 this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
 
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        if (alarmManager != null) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent);
-        }
+
     }
 
     private void cancelNotification() {
@@ -178,6 +177,21 @@ public class ProfileActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            if (data != null) {
+                String updatedUsername = data.getStringExtra("updatedUsername");
+                TextView usernameTextView = findViewById(R.id.username_textview);  // Assuming you have a TextView to show username
+                if (updatedUsername != null) {
+                    usernameTextView.setText(updatedUsername); // Set the updated username
+                }
+            }
+        }
+    }
+
 
     //Bottom Navigation
     private void setupBottomNavigation() {
