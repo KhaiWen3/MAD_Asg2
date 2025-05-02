@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#ffffff"
+    android:elevation="8dp"
+    android:padding="8dp">
+
+    <Button
+        android:id="@+id/rewardButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/hour_container_bg"
+        android:text="Reward"
+        android:textColor="#1e2f67" />
+
+    <Button
+        android:id="@+id/searchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/hour_container_bg"
+        android:text="Search"
+        android:textColor="#1e2f67" />
+
+</LinearLayout>
