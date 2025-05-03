@@ -183,73 +183,26 @@ public class ClockTimer extends AppCompatActivity {
     //Bottom Navigation
     private void setupBottomNavigation() {
         ImageButton clockBtn = findViewById(R.id.clockButton);
-        ImageButton listBtn = findViewById(R.id.listButton);
         ImageButton homeBtn = findViewById(R.id.homeButton);
         ImageButton profileBtn = findViewById(R.id.profileButton);
-        Button rewardBtn = findViewById(R.id.rewardButton);
         Button searchBtn = findViewById(R.id.searchButton);
 
         // Disable current page button
         clockBtn.setEnabled(false);
         clockBtn.setAlpha(0.5f);
 
-        //toggle visibility of hidden options
-        listBtn.setOnClickListener(view -> {
-//            int visibility = rewardBtn.getVisibility() == View.VISIBLE ? View.GONE : View.VISIBLE;
-//            rewardBtn.setVisibility(visibility);
-//            searchBtn.setVisibility(visibility);
-
-            View popupView = LayoutInflater.from(this).inflate(R.layout.custom_popup, null);
-
-            PopupWindow popupWindow = new PopupWindow(
-                    popupView,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
-                    true
-            );
-
-            // Set background, animation, etc.
-            popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            popupWindow.setOutsideTouchable(true);
-
-            // Find your buttons in the custom layout
-            Button rewardButton = popupView.findViewById(R.id.rewardButton);
-            Button searchButton = popupView.findViewById(R.id.searchButton);
-
-            rewardButton.setOnClickListener(rewardView -> {
-                // Handle reward action
-                popupWindow.dismiss();
-            });
-
-            searchButton.setOnClickListener(searchView -> {
-                // Handle search action
-                popupWindow.dismiss();
-            });
-
-            // Show the popup
-            popupWindow.showAsDropDown(view);
+        // Handle home button click
+        homeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ClockTimer.this, DisplayTask.class);
+            startActivity(intent);
+            finish();
         });
 
-        // Handle reward button click
-//        rewardBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(ClockTimer.this, RewardActivity.class); // Replace with your actual class
-//            startActivity(intent);
-//        });
-//
-//        // Handle search button click
-//        searchBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(ClockTimer.this, SearchActivity.class); // Replace with your actual class
-//            startActivity(intent);
-//        });
-//
-//        homeBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(ClockTimer.this, HomeActivity.class); // Change to your actual home activity
-//            startActivity(intent);
-//        });
-//
+        // Handle profile button click
         profileBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(ClockTimer.this, ProfileActivity.class); //Replace with actual class
+            Intent intent = new Intent(ClockTimer.this, ProfileActivity.class);
             startActivity(intent);
+            finish();
         });
     }
 
@@ -398,18 +351,6 @@ public class ClockTimer extends AppCompatActivity {
         updateButtons();
     }
 
-//    private void resetTimer() {
-//        if (countDownTimer != null) {
-//            countDownTimer.cancel();
-//        }
-//        timerRunning = false;
-//        timeLeftInMillis = selectedStartTime;
-//        updateCountDownText(timeLeftInMillis);
-//        updateButtons();
-//        colonText.setVisibility(View.VISIBLE); // Make sure colon is visible after reset
-//
-//    }
-
     private void updateCountDownText(long timeInMillis) {
         int hours = (int) (timeInMillis / 1000) / 3600;
         int minutes = (int) ((timeInMillis / 1000) % 3600) / 60;
@@ -432,26 +373,7 @@ public class ClockTimer extends AppCompatActivity {
                 minutesText.setText(String.format(Locale.getDefault(), "%02d", seconds));
             }
         }
-//        if (hours > 0) {
-//            String timeLeftFormatted = String.format(Locale.getDefault(),
-//                    "%02d:%02d:%02d", hours, minutes, seconds);
-//            hoursText.setText(String.format("%02d", hours));
-//            minutesText.setText(String.format("%02d", minutes));
-//        } else {
-//            String timeLeftFormatted = String.format(Locale.getDefault(),
-//                    "%02d:%02d", minutes, seconds);
-//            hoursText.setText(String.format("%02d", minutes));
-//            minutesText.setText(String.format("%02d", seconds));
-//        }
     }
-
-//    private void blinkColon() {
-//        if (colonText.getVisibility() == View.VISIBLE) {
-//            colonText.setVisibility(View.INVISIBLE);
-//        } else {
-//            colonText.setVisibility(View.VISIBLE);
-//        }
-//    }
 
     private void updateDayInfo() {
         // Simple implementation - you can expand this

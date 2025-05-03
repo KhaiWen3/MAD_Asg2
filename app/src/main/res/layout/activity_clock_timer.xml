@@ -196,27 +196,11 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:background="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <ImageButton
-            android:id="@+id/listButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:padding="4dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/menu"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <!--Hidden sub-options-->
-        <Button
-            android:id="@+id/rewardButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reward"
-            android:padding="4dp"
-            android:scaleType="fitCenter"
-            android:visibility="gone" />
         <Button
             android:id="@+id/searchButton"
             android:layout_width="wrap_content"
@@ -228,7 +212,7 @@
 
         <ImageButton
             android:id="@+id/homeButton"
-            android:layout_width="48dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:padding="4dp"
@@ -238,7 +222,7 @@
 
         <ImageButton
             android:id="@+id/clockButton"
-            android:layout_width="48dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:padding="4dp"
@@ -248,7 +232,7 @@
 
         <ImageButton
             android:id="@+id/profileButton"
-            android:layout_width="48dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:padding="4dp"
@@ -256,7 +240,5 @@
             android:src="@drawable/user"
             android:background="?attr/selectableItemBackgroundBorderless"/>
     </LinearLayout>
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

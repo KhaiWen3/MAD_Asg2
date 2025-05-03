@@ -230,26 +230,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true">
 
-
-        <ImageButton
-            android:id="@+id/listButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:padding="4dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/menu"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-
         <!--Hidden sub-options-->
-        <Button
-            android:id="@+id/rewardButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reward"
-            android:padding="4dp"
-            android:scaleType="fitCenter"
-            android:visibility="gone" />
         <Button
             android:id="@+id/searchButton"
             android:layout_width="wrap_content"
@@ -261,7 +242,7 @@
 
         <ImageButton
             android:id="@+id/homeButton"
-            android:layout_width="48dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:padding="4dp"
@@ -271,7 +252,7 @@
 
         <ImageButton
             android:id="@+id/clockButton"
-            android:layout_width="48dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:padding="4dp"
@@ -281,7 +262,7 @@
 
         <ImageButton
             android:id="@+id/profileButton"
-            android:layout_width="48dp"
+            android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:padding="4dp"
