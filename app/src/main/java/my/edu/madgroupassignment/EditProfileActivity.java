@@ -97,20 +97,7 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
         // Save profile
-        btnSave.setOnClickListener(v -> {
-            String newUsername = editUsername.getText().toString().trim();
-            if (!newUsername.isEmpty()) {
-                // Assuming userRef already points to the current user's node
-                userRef.child("username").setValue(newUsername)
-                        .addOnSuccessListener(aVoid -> {
-                            Toast.makeText(EditProfileActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
-                            finish(); // Optional: go back to ProfileActivity
-                        })
-                        .addOnFailureListener(e -> {
-                            Toast.makeText(EditProfileActivity.this, "Failed to update", Toast.LENGTH_SHORT).show();
-                        });
-            }
-        });
+        btnSave.setOnClickListener(v -> saveProfile());
 
     }
 
