@@ -205,17 +205,44 @@ public class DisplayTask extends AppCompatActivity {
             startActivity(intent);
         });
         
+        // Configure search view
+        searchView.setIconifiedByDefault(false);
+        searchView.setQueryHint("Search tasks by name...");
+        
+        // Handler for delayed search (to avoid executing search on every keystroke)
+        final Handler searchHandler = new Handler();
+        final long SEARCH_DELAY_MS = 300; // 300ms delay
+        final Runnable searchRunnable = new Runnable() {
+            @Override
+            public void run() {
+                String query = searchView.getQuery().toString();
+                searchTasks(query);
+            }
+        };
+        
         // Search listener
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                // Remove callbacks to prevent delayed execution
+                searchHandler.removeCallbacks(searchRunnable);
                 searchTasks(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchTasks(newText);
+                // Remove any pending searches
+                searchHandler.removeCallbacks(searchRunnable);
+                
+                // If empty, reset immediately
+                if (newText.isEmpty()) {
+                    searchTasks("");
+                    return true;
+                }
+                
+                // Otherwise, add a delay before searching to improve performance
+                searchHandler.postDelayed(searchRunnable, SEARCH_DELAY_MS);
                 return true;
             }
         });
@@ -637,15 +664,39 @@ public class DisplayTask extends AppCompatActivity {
         // Create a new list for search results
         List<Task> searchResults = new ArrayList<>();
         
+        // Create separate lists for exact and partial matches
+        List<Task> exactNameMatches = new ArrayList<>();
+        List<Task> partialNameMatches = new ArrayList<>();
+        List<Task> otherMatches = new ArrayList<>();
+        
         // Filter tasks based on query
         for (Task task : filteredTasks) {
-            if (task.getDescription().toLowerCase().contains(lowerCaseQuery) ||
-                (task.getCategory() != null && task.getCategory().toLowerCase().contains(lowerCaseQuery))) {
-                searchResults.add(task);
+            String taskDescription = task.getDescription().toLowerCase();
+            
+            // Check for exact name match (highest priority)
+            if (taskDescription.equals(lowerCaseQuery)) {
+                exactNameMatches.add(task);
+            }
+            // Check for partial name match (description contains the query)
+            else if (taskDescription.contains(lowerCaseQuery)) {
+                partialNameMatches.add(task);
+            }
+            // Check other fields (category, type)
+            else if ((task.getCategory() != null && task.getCategory().toLowerCase().contains(lowerCaseQuery)) ||
+                     (task.getType() != null && task.getType().toLowerCase().contains(lowerCaseQuery))) {
+                otherMatches.add(task);
             }
         }
         
-        Log.d(TAG, "Search results count: " + searchResults.size());
+        // Add all matches in priority order
+        searchResults.addAll(exactNameMatches);
+        searchResults.addAll(partialNameMatches);
+        searchResults.addAll(otherMatches);
+        
+        Log.d(TAG, "Search results count: " + searchResults.size() + 
+              " (exact name: " + exactNameMatches.size() + 
+              ", partial name: " + partialNameMatches.size() + 
+              ", other: " + otherMatches.size() + ")");
         
         // Update the adapter with the search results
         if (taskAdapter != null) {
