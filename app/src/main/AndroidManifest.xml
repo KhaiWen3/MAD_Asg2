@@ -31,7 +31,10 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".DisplayTask"
+            android:exported="false" />
+        <activity
+            android:name=".CreateTask"
             android:exported="false" />
         <activity
             android:name=".Register"

@@ -199,11 +199,10 @@ public class ProfileActivity extends AppCompatActivity {
         profileBtn.setAlpha(0.5f);
 
 
-//
-//        homeBtn.setOnClickListener(v -> {
-//            Intent intent = new Intent(ClockTimer.this, HomeActivity.class); // Change to your actual home activity
-//            startActivity(intent);
-//        });
+       homeBtn.setOnClickListener(v -> {
+           Intent intent = new Intent(ProfileActivity.this, DisplayTask.class); // Change to your actual home activity
+            startActivity(intent);
+        });
 
         clockBtn.setOnClickListener(v -> {
             Intent intent = new Intent(ProfileActivity.this, ClockTimer.class); // Replace 'CurrentActivity' with your current context
