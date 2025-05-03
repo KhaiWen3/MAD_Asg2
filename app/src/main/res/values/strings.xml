@@ -39,6 +39,15 @@
     <string name="taskmate_run">TaskMate</string>
     <string name="username_edit">Username</string>
     <string name="phone_number">Phone Number</string>
+    <string name="walkthrough_message_here">Walkthrough message here</string>
+    <string name="next">Next</string>
+
+    <string-array name="notification_times">
+        <item>15 Minutes </item>
+        <item>30 Minutes </item>
+        <item>1 Hour</item>
+        <item>2 Hours</item>
+    </string-array>
 
 
 </resources>

@@ -41,20 +41,24 @@ public class HelpActivity extends AppCompatActivity{
     private void initListData() {
         listGroup.add("Task");
         listGroup.add("Clock");
-        listGroup.add("Rewards");
+        listGroup.add("Login");
 
         List<String> taskDesc = new ArrayList<>();
-        taskDesc.add("Use subtasks for complex activities. E.g., under 'Shopping', add items; under 'Study', list topics.");
-        taskDesc.add("Create, view and manage your tasks from the home page.");
-        taskDesc.add("Use task templates for quick task creation.");
+        taskDesc.add("1. Use subtasks for complex activities. E.g., under 'Shopping', add items; under 'Study', list topics.");
+        taskDesc.add("2. Create, view and manage your tasks from the home page.");
+        taskDesc.add("3. Use task templates for quick task creation.");
 
         List<String> clockDesc = new ArrayList<>();
-        clockDesc.add("Use the Clock Timer to help concentrate while working on tasks.");
-        clockDesc.add("Track time spent on each task effectively.");
+        clockDesc.add("1. Use the Clock Timer to help concentrate while working on tasks.");
+        clockDesc.add("2. Track time spent on each task effectively.");
 
         List<String> rewardsDesc = new ArrayList<>();
-        rewardsDesc.add("Set personal rewards for motivation after completing tasks.");
-        rewardsDesc.add("Enable notifications to remind and plan your rewards.");
+        rewardsDesc.add("1. Enter Your Credentials: Input your registered email and password in the provided fields.");
+        rewardsDesc.add("2. Tap the \"Login\" button to log into your account");
+        rewardsDesc.add("3. Forgot Password?: If you've forgotten your password, tap the \"Forgot Password?\" link to reset it.");
+        rewardsDesc.add("4. Sign Up: If you don’t have an account, click on the \"Sign Up\" link to create one.");
+
+
 
         listItem.put(listGroup.get(0), taskDesc);
         listItem.put(listGroup.get(1), clockDesc);

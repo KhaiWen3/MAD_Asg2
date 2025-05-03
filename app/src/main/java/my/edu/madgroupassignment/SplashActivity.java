@@ -36,7 +36,7 @@ public class SplashActivity extends AppCompatActivity {
 
             if (currentUser != null) {
                 // User is signed in, go to main/clock/home activity
-                Intent intent = new Intent(SplashActivity.this, ClockTimer.class); // Or ClockTimer if preferred
+                Intent intent = new Intent(SplashActivity.this, DisplayTask.class); // Or ClockTimer if preferred
                 startActivity(intent);
             } else {
                 // No user signed in, go to login screen
