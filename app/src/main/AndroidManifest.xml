@@ -30,18 +30,19 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".DisplayTask"
-            android:exported="false" />
-        <activity
-            android:name=".CreateTask"
-            android:exported="false" />
+
         <activity
             android:name=".Register"
             android:exported="true" />
         <activity
             android:name=".Login"
             android:exported="true" />
+        <activity
+            android:name=".DisplayTask"
+            android:exported="false" />
+        <activity
+            android:name=".CreateTask"
+            android:exported="false" />
         <activity
             android:name=".ClockTimer"
             android:exported="true"
