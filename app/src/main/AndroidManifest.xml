@@ -31,12 +31,6 @@
         </activity>
 
         <activity
-            android:name=".DisplayTask"
-            android:exported="false" />
-        <activity
-            android:name=".CreateTask"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
