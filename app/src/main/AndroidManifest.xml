@@ -21,12 +21,6 @@
         android:theme="@style/Theme.Madgroupassignment"
         tools:targetApi="31">
         <activity
-            android:name=".DisplayTask"
-            android:exported="false" />
-        <activity
-            android:name=".CreateTask"
-            android:exported="false" />
-        <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
@@ -35,6 +29,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".DisplayTask"
+            android:exported="false" />
+        <activity
+            android:name=".CreateTask"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />

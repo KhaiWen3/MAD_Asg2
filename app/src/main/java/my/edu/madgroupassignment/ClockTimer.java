@@ -2,18 +2,13 @@ package my.edu.madgroupassignment;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -193,7 +188,7 @@ public class ClockTimer extends AppCompatActivity {
 
         // Handle home button click
         homeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(ClockTimer.this, DisplayTask.class);
+            Intent intent = new Intent(ClockTimer.this, ClockTimer.class);
             startActivity(intent);
             finish();
         });
@@ -256,35 +251,6 @@ public class ClockTimer extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         checkOrientation();
     }
-
-
-
-
-//    private void startTimer() {
-//        if (timeLeftInMillis <= 0) {
-//            timeLeftInMillis = selectedStartTime;
-//        }
-//
-//        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
-//            @Override
-//            public void onTick(long millisUntilFinished) {
-//                timeLeftInMillis = millisUntilFinished;
-//                updateCountDownText(timeLeftInMillis);
-//                blinkColon();
-//            }
-//
-//            @Override
-//            public void onFinish() {
-//                timerRunning = false;
-//                updateButtons();
-//                //timeLeftInMillis = 0;
-//                //updateCountDownText(0);
-//            }
-//        }.start();
-//
-//        timerRunning = true;
-//        updateButtons();
-//    }
 
     private void startTimer() {
         if (timerModeToggleGroup.getCheckedButtonId() == R.id.startFromZeroButton) {

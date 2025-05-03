@@ -1,35 +1,30 @@
 package my.edu.madgroupassignment;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.Toast;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
-import java.util.Calendar;
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.bumptech.glide.Glide;
 import com.google.firebase.database.annotations.Nullable;
 
-import androidx.annotation.NonNull;
-
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.Calendar;
 public class ProfileActivity extends AppCompatActivity {
 
     private Switch switchNotification;
@@ -198,25 +193,23 @@ public class ProfileActivity extends AppCompatActivity {
         ImageButton clockBtn = findViewById(R.id.clockButton);
         ImageButton homeBtn = findViewById(R.id.homeButton);
         ImageButton profileBtn = findViewById(R.id.profileButton);
-        Button searchBtn = findViewById(R.id.searchButton);
 
         // Disable current page button
         profileBtn.setEnabled(false);
         profileBtn.setAlpha(0.5f);
 
-        // Handle home button click
-        homeBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, DisplayTask.class);
+
+//
+//        homeBtn.setOnClickListener(v -> {
+//            Intent intent = new Intent(ClockTimer.this, HomeActivity.class); // Change to your actual home activity
+//            startActivity(intent);
+//        });
+
+        clockBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, ClockTimer.class); // Replace 'CurrentActivity' with your current context
             startActivity(intent);
-            finish();
         });
 
-        // Handle clock button click
-        clockBtn.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, ClockTimer.class);
-            startActivity(intent);
-            finish();
-        });
     }
 
 }
