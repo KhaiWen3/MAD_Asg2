@@ -31,14 +31,14 @@ public class FaqActivity extends AppCompatActivity {
 
         // Existing FAQ data
         listGroup.add("How do I reset my password?");
-        listGroup.add("Where can I view my rewards?");
+        listGroup.add("Where can I view profile?");
         listGroup.add("How do I contact support?");
 
         List<String> answer1 = new ArrayList<>();
-        answer1.add("Go to Settings > Account > Reset Password and follow the instructions.");
+        answer1.add("Go to Login > Reset Password and follow the instructions.");
 
         List<String> answer2 = new ArrayList<>();
-        answer2.add("Rewards are visible under the 'My Rewards' tab in the main menu.");
+        answer2.add("Go to User Profile > Click on Profile Icon > Edit and View your profile");
 
         List<String> answer3 = new ArrayList<>();
         answer3.add("Tap the 'Contact Us' button in the Profile page to chat with our team.");

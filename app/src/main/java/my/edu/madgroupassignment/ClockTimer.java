@@ -1,7 +1,5 @@
 package my.edu.madgroupassignment;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -14,16 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.google.android.material.button.MaterialButtonToggleGroup;
+import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -45,10 +42,12 @@ public class ClockTimer extends AppCompatActivity {
     private Handler clockHandler = new Handler();
     private Runnable clockUpdater;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clock_timer);
+
 
         // Initialize views
         hoursText = findViewById(R.id.hoursText);
@@ -62,6 +61,10 @@ public class ClockTimer extends AppCompatActivity {
         dateText = findViewById(R.id.dateText);
         timerModeToggleGroup = findViewById(R.id.timerModeToggleGroup);
 
+        // Show walkthrough
+            showWalkthrough();
+
+
         // Initialize bottom navigation
         setupBottomNavigation();
 
@@ -74,6 +77,7 @@ public class ClockTimer extends AppCompatActivity {
 
         // Handle rotation
         checkOrientation();
+
 
         // Toggle between Pomodoro and Start from 0
         timerModeToggleGroup.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
@@ -106,6 +110,7 @@ public class ClockTimer extends AppCompatActivity {
             }
         });
 
+
         // Button click listeners
         startButton.setOnClickListener(v -> {
             if (timerRunning) {
@@ -115,8 +120,64 @@ public class ClockTimer extends AppCompatActivity {
             }
         });
 
+
+
         resetButton.setOnClickListener(v -> resetTimer());
     }
+
+    private void showWalkthrough() {
+        new TapTargetSequence(this)
+                .targets(
+                        TapTarget.forView(startButton, "Start Button", "Tap to start the timer")
+                                .outerCircleColor(R.color.colorWTAccent)
+                                .outerCircleAlpha(0.46f)
+                                .targetCircleColor(R.color.white)
+                                .titleTextColor(R.color.black)
+                                .descriptionTextColor(R.color.white)
+                                .textColor(R.color.white)
+                                .dimColor(R.color.black)
+                                .drawShadow(true)
+                                .cancelable(true)
+                                .tintTarget(true)
+                                .transparentTarget(true)
+                                .id(1),
+
+                        TapTarget.forView(resetButton, "Reset Button", "Tap to reset the timer, but make sure to pause it first!")
+                                .outerCircleColor(R.color.colorWTAccent)
+                                .outerCircleAlpha(0.46f)
+                                .targetCircleColor(R.color.white)
+                                .titleTextColor(R.color.black)
+                                .descriptionTextColor(R.color.white)
+                                .textColor(R.color.white)
+                                .dimColor(R.color.white)
+                                .drawShadow(true)
+                                .cancelable(true)
+                                .tintTarget(true)
+                                .transparentTarget(true)
+                                .id(2)
+                )
+                .listener(new TapTargetSequence.Listener() {
+                    @Override
+                    public void onSequenceFinish() {
+                        Log.d("Walkthrough", "Finished");
+                        // No need to set walkthroughShown here anymore
+                    }
+
+                    @Override
+                    public void onSequenceStep(TapTarget lastTarget, boolean targetClicked) {
+                        Log.d("Walkthrough", "Step shown: " + lastTarget.id());
+                    }
+
+                    @Override
+                    public void onSequenceCanceled(TapTarget lastTarget) {
+                        Log.d("Walkthrough", "Canceled at step: " + lastTarget.id());
+                    }
+                })
+                .start();
+    }
+
+
+
 
 
     //Bottom Navigation
@@ -242,6 +303,9 @@ public class ClockTimer extends AppCompatActivity {
         super.onConfigurationChanged(newConfig);
         checkOrientation();
     }
+
+
+
 
 //    private void startTimer() {
 //        if (timeLeftInMillis <= 0) {

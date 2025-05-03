@@ -83,7 +83,7 @@ public class HelpExpandableListAdapter extends BaseExpandableListAdapter {
                 groupIcon.setImageResource(R.drawable.ic_clock);
                 break;
             case 2:
-                groupIcon.setImageResource(R.drawable.ic_reward);
+                groupIcon.setImageResource(R.drawable.ic_help);
                 break;
         }
 
