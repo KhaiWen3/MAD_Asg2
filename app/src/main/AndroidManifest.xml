@@ -38,6 +38,9 @@
             android:name=".Login"
             android:exported="true" />
         <activity
+            android:name=".ForgotPassword"
+            android:exported="true" />
+        <activity
             android:name=".DisplayTask"
             android:exported="false" />
         <activity

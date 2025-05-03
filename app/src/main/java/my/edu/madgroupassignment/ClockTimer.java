@@ -180,7 +180,6 @@ public class ClockTimer extends AppCompatActivity {
         ImageButton clockBtn = findViewById(R.id.clockButton);
         ImageButton homeBtn = findViewById(R.id.homeButton);
         ImageButton profileBtn = findViewById(R.id.profileButton);
-        Button searchBtn = findViewById(R.id.searchButton);
 
         // Disable current page button
         clockBtn.setEnabled(false);
